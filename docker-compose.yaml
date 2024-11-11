@@ -1,0 +1,35 @@
+name: 'My library'
+services:
+  db_my_library:
+    image: 'postgres'
+    container_name: 'db_my_library'
+    ports:
+      - 5432:5432
+    env_file: 'private/db.env'
+    volumes:
+      - db_my_library:/var/lib/postgresql/data
+    networks:
+      - network_my_library
+
+  app_my_library:
+    image: 'my_library'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:80
+    container_name: app_my_library
+    volumes:
+      - app_my_library_var:/var/www/html/var/
+      - .:/var/www/html
+    networks:
+      - network_my_library
+    depends_on:
+      - db_my_library
+
+volumes:
+  db_my_library:
+  app_my_library_var:
+
+networks:
+  network_my_library:
