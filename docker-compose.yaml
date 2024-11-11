@@ -11,6 +11,16 @@ services:
     networks:
       - network_my_library
 
+  app_node:
+    image: 'node:22-alpine'
+    container_name: app_node
+    volumes:
+      - .:/var/www/html
+    networks:
+      - network_my_library
+    tty: true
+    stdin_open: true
+
   app_my_library:
     image: 'my_library'
     build:
@@ -28,6 +38,7 @@ services:
       - host.docker.internal:host-gateway
     depends_on:
       - db_my_library
+      - app_node
 
 volumes:
   db_my_library:
