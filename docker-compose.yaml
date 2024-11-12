@@ -18,6 +18,8 @@ services:
       - .:/var/www/html
     networks:
       - network_my_library
+    working_dir: /var/www/html
+    command: ['npm', 'run', 'watch']
     tty: true
     stdin_open: true
 
