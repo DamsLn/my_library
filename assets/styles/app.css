@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-    background-color: skyblue;
+    @apply m-0 p-0 flex flex-col items-center justify-start min-h-screen w-full;
 }
