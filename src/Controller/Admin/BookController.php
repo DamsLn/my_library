@@ -14,9 +14,18 @@ class BookController extends AbstractController
     public function index(BookRepository $bookRepository): Response
     {
         $books = $bookRepository->findAll();
+        $tableHeaderCells = [
+            'id' => '#',
+            'title' => 'Titre',
+            'description' => 'Description',
+            'author' =>'Auteur',
+            'createdAt' => 'Date de création',
+            'updatedAt' => 'Date de dernière mise à jour',
+        ];
 
         return $this->render('book/admin/list.html.twig', [
             'books' => $books,
+            'tableHeaderCells' => $tableHeaderCells,
         ]);
     }
 }
