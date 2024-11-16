@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Book;
+use App\Form\BookType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +19,7 @@ class BookController extends AbstractController
     #[Route('/list', name: 'admin_list', methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
-        $bookForm = $this->createForm('App\Form\BookType', new Book());
+        $bookForm = $this->createForm(BookType::class, new Book());
 
         $bookForm->handleRequest($request);
         if ($bookForm->isSubmitted() && $bookForm->isValid()) {
@@ -46,12 +47,25 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/update/{id}', name: 'admin_update', methods: ['GET', 'PUT'])]
+    #[Route('/update/{id}', name: 'admin_update', methods: ['GET', 'POST'])]
     public function update(int $id, Request $request): Response
     {
         $book = $this->em->getRepository(Book::class)->find($id);
 
-        dd($book);
+        $bookForm = $this->createForm(BookType::class, $book);
+
+        $bookForm->handleRequest($request);
+
+        if ($bookForm->isSubmitted() && $bookForm->isValid()) {
+            $this->em->flush();
+
+            return $this->redirectToRoute('app_book_admin_list');
+        }
+
+        return $this->render('book/admin/update.html.twig', [
+            'book' => $book,
+            'bookForm' => $bookForm->createView(),
+        ]);
     }
 
     #[Route('/remove/{id}', name: 'admin_remove', methods: ['DELETE'])]
