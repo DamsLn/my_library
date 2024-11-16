@@ -20,9 +20,10 @@ class Book
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $author = null;
-
+    #[ORM\ManyToOne(inversedBy: 'books')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Author $author = null;
+    
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
@@ -61,12 +62,12 @@ class Book
         return $this;
     }
 
-    public function getAuthor(): ?string
+    public function getAuthor(): ?Author
     {
         return $this->author;
     }
 
-    public function setAuthor(string $author): static
+    public function setAuthor(?Author $author): static
     {
         $this->author = $author;
 

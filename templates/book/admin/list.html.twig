@@ -4,7 +4,30 @@
 {% endblock %}
 
 {% block body %}
-	<div class="px-16 w-full">
+	<div class="w-full">
 		{% include 'components/table.html.twig' with { headerCells: tableHeaderCells, rows: books } %}
+		{% embed 'components/modal.html.twig' with {
+			'modal_id': 'createBookModal'
+		} %}
+			{% block block_name %}
+				{% block modal_title %}
+					Ajout d'un article
+				{% endblock %}
+				{% block modal_content %}
+					{{ form_start(bookForm) }}
+						{{ form_row(bookForm.title, {'attr': {'class': 'mb-4 flex flex-col w-full'}}) }}
+						{{ form_row(bookForm.description, {'attr': {'class': 'mb-4 flex flex-col w-full'}}) }}
+						{{ form_row(bookForm.author, {'attr': {'class': 'mb-4 flex flex-col w-full'}}) }}
+						{{ form_row(bookForm.save, {'attr': {'class': 'bg-blue-500 text-white border-none rounded px-4 py-3 w-full hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200'}}) }}
+					{{ form_end(bookForm) }}
+				{% endblock %}
+			{% endblock %}
+		{% endembed %}
+		<button onclick="openModal('createBookModal')" class="absolute bottom-8 right-8 w-fit border-none rounded-full p-3 bg-blue-500 hover:scale-125">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24px" height="24px">
+				<!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+				<path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z" fill="#f8fafc"/>
+			</svg>
+		</button>
 	</div>
 {% endblock %}
