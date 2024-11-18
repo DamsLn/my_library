@@ -47,28 +47,7 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/update/{id}', name: 'admin_update', methods: ['GET', 'POST'])]
-    public function update(int $id, Request $request): Response
-    {
-        $book = $this->em->getRepository(Book::class)->find($id);
-
-        $bookForm = $this->createForm(BookType::class, $book);
-
-        $bookForm->handleRequest($request);
-
-        if ($bookForm->isSubmitted() && $bookForm->isValid()) {
-            $this->em->flush();
-
-            return $this->redirectToRoute('app_book_admin_list');
-        }
-
-        return $this->render('book/admin/update.html.twig', [
-            'book' => $book,
-            'bookForm' => $bookForm->createView(),
-        ]);
-    }
-
-    #[Route('/remove/{id}', name: 'admin_remove', methods: ['DELETE'])]
+    #[Route('/{id}/remove', name: 'admin_remove', methods: ['DELETE'])]
     public function remove(int $id): Response
     {
         $book = $this->em->getRepository(Book::class)->find($id);
