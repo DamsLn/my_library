@@ -16,6 +16,18 @@ class BookAjaxController extends AbstractController
     public function __construct(private EntityManagerInterface $em)
     {}
 
+    #[Route('/book/{id}/show', name: 'book_show', methods: ['GET'])]
+    public function showBook(int $id): Response
+    {
+        $book = $this->em->getRepository(Book::class)->find($id);
+
+        $htmlBookInfo = $this->render('book/admin/show.html.twig', [
+            'book' => $book
+        ])->getContent();
+
+        return $this->json($htmlBookInfo, 200, [], ['Content-Type' => 'application/json']);
+    }
+
     #[Route('/book/{id}/edit', name: 'book_edit', methods: ['GET', 'POST'])]
     public function editBook(int $id, Request $request): Response
     {

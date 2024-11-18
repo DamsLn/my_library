@@ -30,6 +30,16 @@
 				<div id="editBookForm"></div>
 			{% endblock %}
 		{% endembed %}
+		{% embed 'components/modal.html.twig' with {
+			'modal_id': 'showBookModal'
+		} %}
+			{% block modal_title %}
+				Informations du livre
+			{% endblock %}
+			{% block modal_content %}
+				<div id="bookInfo"></div>
+			{% endblock %}
+		{% endembed %}
 		<button onclick="openModal('createBookModal')" class="absolute bottom-8 right-8 w-fit border-none rounded-full p-3 bg-blue-500 hover:scale-125">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24px" height="24px">
 				<!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
