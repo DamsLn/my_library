@@ -19,6 +19,7 @@ class BookController extends AbstractController
     #[Route('/list', name: 'list', methods: ['GET', 'POST'])]
     public function adminList(Request $request): Response
     {
+        $books = $this->em->getRepository(Book::class)->findAllAvailable();
         $bookForm = $this->createForm(BookType::class, new Book());
 
         $bookForm->handleRequest($request);
@@ -33,7 +34,6 @@ class BookController extends AbstractController
             return $this->redirectToRoute('app_book_admin_list');
         }
 
-        $books = $this->em->getRepository(Book::class)->findAll();
         $tableHeaderCells = [
             'id' => '#',
             'title' => 'Titre',

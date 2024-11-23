@@ -16,6 +16,21 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
+    /**
+     * Fetch the list of books when their deleted_at value is set to null
+     * @return Book[]
+     */
+    public function findAllAvailable(): array
+    {
+        return $this->createQueryBuilder('b')
+            ->select('b', 'a')
+            ->leftJoin('b.author', 'a')
+            ->where('b.deletedAt IS NULL')
+            ->orderBy('b.title', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Book[] Returns an array of Book objects
     //     */
