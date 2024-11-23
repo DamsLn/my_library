@@ -32,7 +32,7 @@ class MailController extends AbstractController
 
             $mailer->send($email);
 
-            $contactForm = $this->createForm(ContactType::class, new ContactDTO());
+            return $this->redirectToRoute('app_contact');
         }
 
         return $this->render('mail/index.html.twig', [

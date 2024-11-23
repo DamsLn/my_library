@@ -3,7 +3,6 @@
 namespace App\DTO;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use Webmozart\Assert\Assert as AssertAssert;
 
 class ContactDTO
 {
