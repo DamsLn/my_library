@@ -15,3 +15,21 @@ export const bookEdit = (bookId) => {
             document.getElementById('editBookForm').innerHTML = html;
         });
 }
+
+export const askConfirmation = (event, actionType) => {
+    let message = "Êtes-vous sûr de vouloir ";
+
+    switch (actionType) {
+        case 'remove':
+            message += "supprimer ce livre ?";
+            break;
+        default:
+            message += "réaliser cette action ?";
+            break;
+    }
+
+    if (!window.confirm(message)) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+}

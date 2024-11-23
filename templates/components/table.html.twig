@@ -40,7 +40,7 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <form action="{{ path('app_book_admin_remove', {'id': row.id}) }}" method="POST">
+                                                    <form onsubmit="askConfirmation(event, 'remove')" action="{{ path('app_book_admin_remove', {'id': row.id}) }}" method="POST">
                                                         <input type="hidden" name="_method" value="DELETE" />
                                                         <button type="submit" class="flex items-center justify-center">
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16px" height="auto">
