@@ -10,13 +10,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/book', name: 'app_book_')]
+#[Route('/book/admin', name: 'app_book_admin_')]
 class BookController extends AbstractController
 {
     public function __construct(private EntityManagerInterface $em)
     {}
 
-    #[Route('/admin/list', name: 'admin_list', methods: ['GET', 'POST'])]
+    #[Route('/list', name: 'list', methods: ['GET', 'POST'])]
     public function adminList(Request $request): Response
     {
         $bookForm = $this->createForm(BookType::class, new Book());
@@ -51,17 +51,7 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/list', name: 'list', methods: ['GET'])]
-    public function list(): Response
-    {
-        $books = $this->em->getRepository(Book::class)->findAll();
-        
-        return $this->render('book/list.html.twig', [
-            'books' => $books,
-        ]);
-    }
-
-    #[Route('/admin/{id}/remove', name: 'admin_remove', methods: ['DELETE'])]
+    #[Route('/{id}/remove', name: 'remove', methods: ['DELETE'])]
     public function remove(int $id): Response
     {
         $book = $this->em->getRepository(Book::class)->find($id);

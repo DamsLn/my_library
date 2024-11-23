@@ -16,10 +16,13 @@ export const bookEdit = (bookId) => {
         });
 }
 
-export const askConfirmation = (event, actionType) => {
+export const bookAskConfirmation = (event, actionType) => {
     let message = "Êtes-vous sûr de vouloir ";
 
     switch (actionType) {
+        case 'remove':
+            message += "supprimer ce livre ?";
+            break;
         case 'remove':
             message += "supprimer ce livre ?";
             break;
