@@ -27,6 +27,8 @@ class BookController extends AbstractController
 
             $this->em->persist($newBook);
             $this->em->flush();
+
+            $this->addFlash('success', 'Le livre a bien été ajouté');
         }
 
         $books = $this->em->getRepository(Book::class)->findAll();
@@ -54,6 +56,8 @@ class BookController extends AbstractController
 
         $this->em->remove($book);
         $this->em->flush();
+
+        $this->addFlash('success', 'Le livre a bien été supprimé');
 
         return $this->redirectToRoute('app_book_admin_list');
     }

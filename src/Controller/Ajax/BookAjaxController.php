@@ -42,6 +42,8 @@ class BookAjaxController extends AbstractController
         if ($bookForm->isSubmitted() && $bookForm->isValid()) {
             $this->em->flush();
 
+            $this->addFlash('success', 'Le livre a bien été mis à jour');
+
             return $this->redirectToRoute('app_book_admin_list');
         }
 
