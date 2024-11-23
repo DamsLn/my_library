@@ -15,6 +15,7 @@
 			{% endblock %}
 			{% block modal_content %}
 				{{ form_start(bookForm) }}
+					{{ form_row(bookForm.cover, {'attr': {'class': 'mb-4 flex flex-col w-full'}}) }}
 					{{ form_row(bookForm.title, {'attr': {'class': 'mb-4 flex flex-col w-full'}}) }}
 					{{ form_row(bookForm.description, {'attr': {'class': 'mb-4 flex flex-col w-full'}}) }}
 					{{ form_row(bookForm.author, {'attr': {'class': 'mb-4 flex flex-col w-full'}}) }}
