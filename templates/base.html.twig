@@ -1,3 +1,9 @@
+{% set body_classes = 'bg-slate-50' %}
+
+{% if is_admin_page is defined and is_admin_page %}
+    {% set body_classes = body_classes ~ ' overflow-hidden' %}
+{% endif %}
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,7 +19,7 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
-    <body class="overflow-hidden bg-slate-50">
+    <body class="{{ body_classes }}">
         {% include 'layout/header.html.twig' %}
         <div class="w-full h-screen px-16 py-4">
             {% include 'components/flash.html.twig' %}

@@ -30,6 +30,6 @@ body {
     @apply bg-red-500;
 }
 
-#bookTable {
+#bookTable, #authorTable {
     height: 75vh;
 }
