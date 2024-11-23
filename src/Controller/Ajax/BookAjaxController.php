@@ -28,7 +28,7 @@ class BookAjaxController extends AbstractController
         return $this->json($htmlBookInfo, 200, [], ['Content-Type' => 'application/json']);
     }
 
-    #[Route('/book/{id}/edit', name: 'book_edit', methods: ['GET', 'POST'])]
+    #[Route('/admin/book/{id}/edit', name: 'book_edit', methods: ['GET', 'POST'])]
     public function editBook(int $id, Request $request): Response
     {
         $book = $this->em->getRepository(Book::class)->find($id);

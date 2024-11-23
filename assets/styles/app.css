@@ -7,7 +7,7 @@ body {
 }
 
 .flash {
-    @apply border-none rounded p-4 flex items-start justify-center;
+    @apply border-none rounded p-6 flex items-start justify-center;
 }
 
 .flash__message {
@@ -28,4 +28,8 @@ body {
 
 .flash--error {
     @apply bg-red-500;
+}
+
+#bookTable {
+    height: 75vh;
 }

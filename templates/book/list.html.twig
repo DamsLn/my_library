@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des livres{% endblock %}
+
+{% block body %}
+	<div class="w-full h-4/5 overflow-scroll flex flex-col justify-center items-start gap-4">
+        {% for book in books %}          
+            <div class="w-full p-6 border-none rounded shadow-sm bg-slate-100">
+                <p>Titre : <span class="font-semibold">{{ book.title }}</span></p>
+                <p class="my-4">Description : <span class="font-semibold">{{ book.description }}</span></p>
+                <p>Auteur : <span class="font-semibold">{{ book.author.fullName }}</span></p>
+            </div>
+        {% endfor %}
+	</div>
+{% endblock %}

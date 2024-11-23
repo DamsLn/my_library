@@ -8,7 +8,7 @@ export const bookShow = (bookId) => {
 }
 
 export const bookEdit = (bookId) => {
-    fetch(`/ajax/book/${bookId}/edit`)
+    fetch(`/ajax/admin/book/${bookId}/edit`)
         .then(response => response.json())
         .then(html => {
             openModal('editBookModal');
