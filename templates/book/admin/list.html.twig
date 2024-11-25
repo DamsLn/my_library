@@ -1,0 +1,53 @@
+{% set is_admin_page = true %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des livres{% endblock %}
+
+{% block body %}
+	<div class="w-full">
+		{% include 'components/books/table.html.twig' with { headerCells: tableHeaderCells, rows: books } %}
+		{% embed 'components/modal.html.twig' with {
+			'modal_id': 'createBookModal'
+		} %}
+			{% block modal_title %}
+				Ajout d'un livre
+			{% endblock %}
+			{% block modal_content %}
+				{{ form_start(bookForm) }}
+					{{ form_row(bookForm.cover, {'attr': {'class': 'mb-4 flex flex-col w-full'}}) }}
+					{{ form_row(bookForm.title, {'attr': {'class': 'mb-4 flex flex-col w-full'}}) }}
+					{{ form_row(bookForm.description, {'attr': {'class': 'mb-4 flex flex-col w-full'}}) }}
+					{{ form_row(bookForm.author, {'attr': {'class': 'mb-4 flex flex-col w-full'}}) }}
+					{{ form_row(bookForm.save, {'attr': {'class': 'bg-blue-500 text-white border-none rounded px-4 py-3 w-full hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200'}}) }}
+				{{ form_end(bookForm) }}
+			{% endblock %}
+		{% endembed %}
+		{% embed 'components/modal.html.twig' with {
+			'modal_id': 'editBookModal'
+		} %}
+			{% block modal_title %}
+				Édition d'un livre
+			{% endblock %}
+			{% block modal_content %}
+				<div id="editBookForm"></div>
+			{% endblock %}
+		{% endembed %}
+		{% embed 'components/modal.html.twig' with {
+			'modal_id': 'showBookModal'
+		} %}
+			{% block modal_title %}
+				Informations du livre
+			{% endblock %}
+			{% block modal_content %}
+				<div id="bookInfo"></div>
+			{% endblock %}
+		{% endembed %}
+		<button onclick="openModal('createBookModal')" class="fixed bottom-8 right-8 w-fit border-none rounded-full p-3 bg-blue-500 hover:scale-125">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24px" height="24px">
+				<!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+				<path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z" fill="#f8fafc"/>
+			</svg>
+		</button>
+	</div>
+{% endblock %}

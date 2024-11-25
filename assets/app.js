@@ -1,10 +1,19 @@
 import './bootstrap.js';
-/*
- * Welcome to your app's main JavaScript file!
- *
- * This file will be included onto the page via the importmap() Twig function,
- * which should already be in your base.html.twig.
- */
 import './styles/app.css';
+import { openModal, closeModal } from './components/modal.js';
+import { bookShow, bookEdit, bookAskConfirmation } from './controllers/book_controller.js';
+import { authorShow, authorEdit, authorAskConfirmation } from './controllers/author_controller.js';
+import { hiddeMessageFlash } from './components/flash.js';
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+window.openModal = openModal;
+window.closeModal = closeModal;
+
+window.bookEdit = bookEdit;
+window.bookShow = bookShow;
+window.bookAskConfirmation = bookAskConfirmation;
+
+window.authorEdit = authorEdit;
+window.authorShow = authorShow;
+window.authorAskConfirmation = authorAskConfirmation;
+
+window.hiddeMessageFlash = hiddeMessageFlash;

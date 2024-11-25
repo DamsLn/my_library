@@ -1,0 +1,8 @@
+<div class="w-full">
+    {% if book.coverFilename is not null %}
+        <img src="{{ asset('uploads/covers/' ~ book.coverFilename) }}" alt="">
+    {% endif %}
+    <p>Titre : <span class="font-bold">{{ book.title }}</span></p>
+    <p>Description : <span class="font-bold">{{ book.description }}</span></p>
+    <p>Auteur : <span class="font-bold">{{ book.author.fullName }}</span></p>
+</div>

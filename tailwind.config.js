@@ -5,8 +5,15 @@ module.exports = {
     "./templates/**/*.html.twig",
   ],
   theme: {
+    fontSize: {
+      "xl": "18.72px",
+      "2xl": "24px",
+      "3xl": "32px",
+    },
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
 }
 

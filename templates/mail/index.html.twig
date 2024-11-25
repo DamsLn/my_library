@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nous contacter{% endblock %}
+
+{% block body %}
+    <div class="w-full flex justify-center items-center">
+        <div class="w-1/2">
+            {{ form_start(contactForm) }}
+                {{ form_row(contactForm.email, {'attr': {'class': 'mb-4 flex flex-col w-full'}}) }}
+                {{ form_row(contactForm.subject, {'attr': {'class': 'mb-4 flex flex-col w-full'}}) }}
+                {{ form_row(contactForm.message, {'attr': {'class': 'mb-4 flex flex-col w-full'}}) }}
+                {{ form_row(contactForm.submit, {'attr': {'class': 'bg-blue-500 text-white border-none rounded px-4 py-3 w-full hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200'}}) }}
+            {{ form_end(contactForm) }}
+        </div>
+    </div>
+{% endblock %}
