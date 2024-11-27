@@ -1,0 +1,41 @@
+{% set overflow_hidden = true %}
+{% set disconnected = true %}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<div class="w-full flex justify-center items-center">
+    <form method="post" class="border-none rounded bg-slate-50 shadow p-6 w-1/2 flex flex-col">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.user %}
+            <div class="mb-3">
+                Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('auth_logout') }}">Se déconnecter</a>
+            </div>
+        {% endif %}
+
+        <h2 class="text-2xl font-semibold mb-4">Formulaire de connexion</h2>
+        <label for="inputEmail">Adresse email</label>
+        <input class="mb-4" type="email" value="{{ last_username }}" name="email" id="inputEmail" autocomplete="email" required autofocus>
+        <label for="inputPassword">Mot de passe</label>
+        <input type="password" name="password" id="inputPassword" autocomplete="current-password" required>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        <div class="my-4">
+            <label>
+                <input type="checkbox" name="_remember_me">
+                Se souvenir de moi
+            </label>
+        </div>
+
+        <button class="bg-blue-500 text-white border-none rounded px-4 py-3 w-full hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200" type="submit">
+            Se connecter
+        </button>
+    </form>
+</div>
+{% endblock %}

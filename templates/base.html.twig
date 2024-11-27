@@ -1,6 +1,6 @@
 {% set body_classes = 'bg-slate-50' %}
 
-{% if is_admin_page is defined and is_admin_page %}
+{% if overflow_hidden is defined and overflow_hidden %}
     {% set body_classes = body_classes ~ ' overflow-hidden' %}
 {% endif %}
 
@@ -20,8 +20,10 @@
         {% endblock %}
     </head>
     <body class="{{ body_classes }}">
-        {% include 'layout/header.html.twig' %}
-        <div class="w-full h-screen px-16 py-4">
+        {% if disconnected is not defined %}
+            {% include 'layout/header.html.twig' %}
+        {% endif %}
+        <div class="w-full h-screen px-16 py-4 {{ disconnected is defined ? 'flex justify-center items-center' }}">
             {% include 'components/flash.html.twig' %}
             {% block body %}{% endblock %}
         </div>

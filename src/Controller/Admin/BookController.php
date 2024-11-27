@@ -11,9 +11,11 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/book/admin', name: 'app_book_admin_')]
+#[IsGranted('ROLE_ADMIN')]
 class BookController extends AbstractController
 {
     public function __construct(private EntityManagerInterface $em)
