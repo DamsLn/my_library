@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Book;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -16,19 +17,33 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
-    /**
-     * Fetch the list of books when their deleted_at value is set to null
-     * @return Book[]
-     */
     public function findAllAvailable(): array
     {
         return $this->createQueryBuilder('b')
+            ->where('b.deletedAt IS NULL')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Fetch the list of books when their deleted_at value is set to null
+     * @return Paginator
+     */
+    public function findAllAvailablePaginate(int $page, int $limit): Paginator
+    {
+        return new Paginator(
+            $this->createQueryBuilder('b')
             ->select('b', 'a')
             ->leftJoin('b.author', 'a')
             ->where('b.deletedAt IS NULL')
             ->orderBy('b.title', 'ASC')
+            ->setFirstResult(($page - 1) * $limit)
+            ->setMaxResults($limit)
             ->getQuery()
-            ->getResult();
+            // Indicates to Doctrine to not perform a DISTINCT on the ID
+            // (default behavior of Paginator)
+            ->setHint(Paginator::HINT_ENABLE_DISTINCT, false)
+        );
     }
 
     //    /**

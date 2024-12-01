@@ -7,6 +7,12 @@
 {% block body %}
 	<div class="w-full">
 		{% include 'components/books/table.html.twig' with { headerCells: tableHeaderCells, rows: books } %}
+		{% if pageNumber > 1 %}
+			<a href="{{ path("app_book_admin_list", {page: pageNumber - 1}) }}" class="bg-blue-500 text-white border-none rounded px-4 py-3 w-full hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200">Page précédente</a>
+		{% endif %}
+		{% if pageNumber < maxPages %}
+			<a href="{{ path("app_book_admin_list", {page: pageNumber + 1}) }}" class="bg-blue-500 text-white border-none rounded px-4 py-3 w-full hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200">Page suivante</a>
+		{% endif %}
 		{% embed 'components/modal.html.twig' with {
 			'modal_id': 'createBookModal'
 		} %}

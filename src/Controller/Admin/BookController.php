@@ -18,6 +18,8 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[IsGranted('ROLE_ADMIN')]
 class BookController extends AbstractController
 {
+    private const int LIMIT = 2;
+
     public function __construct(private EntityManagerInterface $em)
     {}
 
@@ -28,7 +30,16 @@ class BookController extends AbstractController
         #[Autowire('%kernel.project_dir%/public/uploads/covers')] string $coversDirectory
     ): Response
     {
-        $books = $this->em->getRepository(Book::class)->findAllAvailable();
+        $bookRepository = $this->em->getRepository(Book::class);
+        
+        $page = $request->query->getInt('page', 1);
+        
+        $books = $bookRepository->findAllAvailablePaginate(
+            $page,
+            self::LIMIT
+        );
+        $maxPages = ceil($books->count() / self::LIMIT);
+
         $bookForm = $this->createForm(BookType::class, new Book());
 
         $bookForm->handleRequest($request);
@@ -74,6 +85,8 @@ class BookController extends AbstractController
             'books' => $books,
             'tableHeaderCells' => $tableHeaderCells,
             'bookForm' => $bookForm->createView(),
+            'pageNumber' => $page,
+            'maxPages' => $maxPages,
         ]);
     }
 
