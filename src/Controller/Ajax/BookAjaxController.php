@@ -4,6 +4,7 @@ namespace App\Controller\Ajax;
 
 use App\Entity\Book;
 use App\Form\BookType;
+use App\Security\Voter\BookVoter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -11,9 +12,11 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/ajax', name: 'ajax_')]
+#[IsGranted('ROLE_ADMIN')]
 class BookAjaxController extends AbstractController 
 {
     public function __construct(private EntityManagerInterface $em)
@@ -32,16 +35,16 @@ class BookAjaxController extends AbstractController
     }
 
     #[Route('/admin/book/{id}/edit', name: 'book_edit', methods: ['GET', 'POST'])]
+    #[IsGranted(BookVoter::EDIT, 'book')]
     public function editBook(
-        int $id, 
+        Book $book, 
         Request $request,
         SluggerInterface $slugger,
         #[Autowire('%kernel.project_dir%/public/uploads/covers')] string $coversDirectory
     ): Response
     {
-        $book = $this->em->getRepository(Book::class)->find($id);
         $bookForm = $this->createForm(BookType::class, $book, [
-            'action' => $this->generateUrl('ajax_book_edit', ['id' => $id]),
+            'action' => $this->generateUrl('ajax_book_edit', ['id' => $book->getId()]),
         ]);
 
         $bookForm->handleRequest($request);
