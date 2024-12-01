@@ -36,6 +36,10 @@ class Book
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $coverFilename = null;
 
+    #[ORM\ManyToOne(inversedBy: 'books')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $createdBy = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +125,18 @@ class Book
     public function setCoverFilename(?string $coverFilename): static
     {
         $this->coverFilename = $coverFilename;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): static
+    {
+        $this->createdBy = $createdBy;
 
         return $this;
     }

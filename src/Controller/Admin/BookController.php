@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Book;
 use App\Form\BookType;
+use App\Security\Voter\BookVoter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -91,14 +92,13 @@ class BookController extends AbstractController
     }
 
     #[Route('/{id}/remove', name: 'remove', methods: ['DELETE'])]
+    #[IsGranted(BookVoter::DELETE, 'book')]
     public function remove(
-        int $id,
+        Book $book,
         #[Autowire('%kernel.project_dir%/public/uploads/covers')] string $coversDirectory, 
         Filesystem $filesystem
     ): Response
     {
-        $book = $this->em->getRepository(Book::class)->find($id);
-
         if (!is_null($book->getCoverFilename())) {
             $filesystem->remove($coversDirectory.'/'.$book->getCoverFilename());
         }
